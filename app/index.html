@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- Подключаем стили проекта -->
+    <link rel="stylesheet" href="css/app.min.css">
+</head>
+<body>
+<section id="companies" class="companies">
+    <div class="container">
+        <div class="companies-wrapper">
+            <div class="companies-hor">
+                <div class="companies-hor-item"><img src="images/1.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/2.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/3.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/4.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/5.jpg" alt=""></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--<section>-->
+<!--    <div class="container">-->
+<!--        <div class="companies-wrapper1">-->
+<!--            <div class="companies-hor1">-->
+<!--                <div class="companies-hor-item1"><img src="images/1.jpg" alt=""></div>-->
+<!--                <div class="companies-hor-item1"><img src="images/2.jpg" alt=""></div>-->
+<!--                <div class="companies-hor-item1"><img src="images/3.jpg" alt=""></div>-->
+<!--                <div class="companies-hor-item1"><img src="images/4.jpg" alt=""></div>-->
+<!--                <div class="companies-hor-item1"><img src="images/5.jpg" alt=""></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!-- Подключаем скрипты проекта -->
+<script src="js/app.min.js"></script>
+<script>
+    const carousel = new SliderCarousel({
+        main: '.companies-wrapper',
+        wrap: '.companies-hor',
+        showToSlides: 4,
+        position: 0,
+        infinity: true,
+        responsive: [
+            {
+                breakPoint: 1024,
+                slideToShow: 3
+            },
+            {
+                breakPoint: 768,
+                slideToShow: 2
+            },
+            {
+                breakPoint: 576,
+                slideToShow: 1
+            }
+        ]
+    });
+    // const carousel1 = new SliderCarousel({
+    //     main: '.companies-wrapper1',
+    //     wrap: '.companies-hor1',
+    //     showToSlides: 3,
+    //     position: 0,
+    //     infinity: true
+    // });
+    // carousel1.init();
+    carousel.init();
+</script>
+</body>
+</html>
