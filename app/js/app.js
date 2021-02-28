@@ -1,6 +1,7 @@
 'use strict';
 
 class SliderCarousel {
+    //Получаем входные данные
     constructor({
                     main,
                     numberSlider = 0,
@@ -22,6 +23,9 @@ class SliderCarousel {
         this.prev = document.querySelector(prev);
         this.showToSlides = showToSlides;
         this.numberSlider = numberSlider;
+        this.widthOneSlide = window.innerWidth * 0.9 / showToSlides;
+        this.onePersent = window.innerWidth * 0.9 / 100;
+        this.positionNow = this.wrap.style.transform;
         this.options = {
             position,
             widthSlides: 100 / this.showToSlides,
@@ -31,6 +35,7 @@ class SliderCarousel {
     }
 
     init() {
+
         this.addGloClass();
         this.addStyle();
         if (this.prev && this.next) {
@@ -47,6 +52,7 @@ class SliderCarousel {
         if (this.responsive) {
             this.responseInit();
         }
+        this.swipe();
     }
 
     addGloClass() {
@@ -61,7 +67,7 @@ class SliderCarousel {
         let style = document.getElementById(`sliderCarousel-style${this.numberSlider}`);
         if (!style) {
             style = document.createElement('style');
-            style.id =`sliderCarousel-style${this.numberSlider}`;
+            style.id = `sliderCarousel-style${this.numberSlider}`;
         }
         style.textContent = `
         .glo-slider${this.numberSlider} {
@@ -93,7 +99,6 @@ class SliderCarousel {
     prevSlider = () => {
         if (this.options.infinity || this.options.position > 0) {
             --this.options.position;
-            console.log(this.options.position);
             if (this.options.position < 0) {
                 this.options.position = this.slides.length - this.showToSlides;
             }
@@ -103,7 +108,7 @@ class SliderCarousel {
     nextSlider = () => {
         if (this.options.infinity || this.options.position < this.slides.length - this.showToSlides) {
             ++this.options.position;
-            console.log(this.options.position);
+            // console.log(this.options.position);
             if (this.options.position > this.slides.length - this.showToSlides) {
                 this.options.position = 0;
             }
@@ -179,4 +184,23 @@ class SliderCarousel {
         checkResponse();
         window.addEventListener('resize', checkResponse);
     }
+
+    swipe() {
+        let arrayClientX = [];
+        document.querySelector(`.glo-slider${this.numberSlider}`).addEventListener('touchmove', (e) => {
+            let a = e.targetTouches[0].clientX;
+            arrayClientX.push(a);
+        })
+        document.querySelector(`.glo-slider${this.numberSlider}`).addEventListener('touchend', (e) => {
+            let swipeDistance = arrayClientX[0] - arrayClientX[arrayClientX.length - 1]
+            if (this.widthOneSlide * 0.5 <= swipeDistance) {
+                this.nextSlider()
+            } else if (-(this.widthOneSlide) * 0.5 >= swipeDistance) {
+                this.prevSlider()
+            }
+            arrayClientX = []
+        })
+    }
 }
+
+
