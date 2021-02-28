@@ -3,6 +3,7 @@
 class SliderCarousel {
     constructor({
                     main,
+                    numberSlider = 0,
                     wrap,
                     position = 0,
                     next,
@@ -20,6 +21,7 @@ class SliderCarousel {
         this.next = document.querySelector(next);
         this.prev = document.querySelector(prev);
         this.showToSlides = showToSlides;
+        this.numberSlider = numberSlider;
         this.options = {
             position,
             widthSlides: 100 / this.showToSlides,
@@ -48,34 +50,34 @@ class SliderCarousel {
     }
 
     addGloClass() {
-        this.main.classList.add('glo-slider');
-        this.wrap.classList.add('glo-slider__wrap');
+        this.main.classList.add(`glo-slider${this.numberSlider}`);
+        this.wrap.classList.add(`glo-slider__wrap${this.numberSlider}`);
         for (const item of this.slides) {
-            item.classList.add('glo-slider__item')
+            item.classList.add(`glo-slider__item${this.numberSlider}`)
         }
     }
 
     addStyle() {
-        let style = document.getElementById('sliderCarousel-style');
+        let style = document.getElementById(`sliderCarousel-style${this.numberSlider}`);
         if (!style) {
             style = document.createElement('style');
-            style.id = 'sliderCarousel-style';
+            style.id =`sliderCarousel-style${this.numberSlider}`;
         }
         style.textContent = `
-        .glo-slider {
+        .glo-slider${this.numberSlider} {
         width: 90%;
         overflow: hidden;
         margin: 0 auto;
         }
         
-        .glo-slider__wrap {
+        .glo-slider__wrap${this.numberSlider} {
         display: flex;
         transition: transform 0.5s;
         will-change: transform;
         text-align: center;
         }
         
-        .glo-slider__item {
+        .glo-slider__item${this.numberSlider} {
         flex: 0 0 ${this.options.widthSlides}%;
         margin: 0 auto  ;
         }

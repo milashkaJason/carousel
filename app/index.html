@@ -24,29 +24,19 @@
         </div>
     </div>
 </section>
-<!--<section>-->
-<!--    <div class="container">-->
-<!--        <div class="companies-wrapper1">-->
-<!--            <div class="companies-hor1">-->
-<!--                <div class="companies-hor-item1"><img src="images/1.jpg" alt=""></div>-->
-<!--                <div class="companies-hor-item1"><img src="images/2.jpg" alt=""></div>-->
-<!--                <div class="companies-hor-item1"><img src="images/3.jpg" alt=""></div>-->
-<!--                <div class="companies-hor-item1"><img src="images/4.jpg" alt=""></div>-->
-<!--                <div class="companies-hor-item1"><img src="images/5.jpg" alt=""></div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
+
 
 <!-- Подключаем скрипты проекта -->
 <script src="js/app.min.js"></script>
 <script>
+<!--    инициализация слайдера-->
     const carousel = new SliderCarousel({
+        numberSlider: 1,
         main: '.companies-wrapper',
         wrap: '.companies-hor',
-        showToSlides: 4,
+        showToSlides: 3,
         position: 0,
-        infinity: true,
+        infinity: false,
         responsive: [
             {
                 breakPoint: 1024,
@@ -62,15 +52,8 @@
             }
         ]
     });
-    // const carousel1 = new SliderCarousel({
-    //     main: '.companies-wrapper1',
-    //     wrap: '.companies-hor1',
-    //     showToSlides: 3,
-    //     position: 0,
-    //     infinity: true
-    // });
-    // carousel1.init();
     carousel.init();
+
 </script>
 </body>
 </html>

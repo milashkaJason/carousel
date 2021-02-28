@@ -10,10 +10,50 @@
     <link rel="stylesheet" href="css/app.min.css">
 </head>
 <body>
+<section id="companies" class="companies">
+    <div class="container">
+        <div class="companies-wrapper">
+            <div class="companies-hor">
+                <div class="companies-hor-item"><img src="images/1.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/2.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/3.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/4.jpg" alt=""></div>
+                <div class="companies-hor-item"><img src="images/5.jpg" alt=""></div>
+            </div>
 
-hi
+        </div>
+    </div>
+</section>
+
 
 <!-- Подключаем скрипты проекта -->
 <script src="js/app.min.js"></script>
+<script>
+<!--    инициализация слайдера-->
+    const carousel = new SliderCarousel({
+        numberSlider: 1,
+        main: '.companies-wrapper',
+        wrap: '.companies-hor',
+        showToSlides: 3,
+        position: 0,
+        infinity: false,
+        responsive: [
+            {
+                breakPoint: 1024,
+                slideToShow: 3
+            },
+            {
+                breakPoint: 768,
+                slideToShow: 2
+            },
+            {
+                breakPoint: 576,
+                slideToShow: 1
+            }
+        ]
+    });
+    carousel.init();
+
+</script>
 </body>
 </html>
