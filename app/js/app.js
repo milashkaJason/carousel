@@ -1,7 +1,17 @@
 'use strict';
 
 class SliderCarousel {
-    //Получаем входные данные
+    /**
+     * @param main {string} wrapper слайдера
+     * @param numberSlider {number} номер слайдера
+     * @param wrap {string} wrapper слайдов
+     * @param position {number} номер первого слайда
+     * @param next {string} кнопка next
+     * @param prev {string} кнопка prev
+     * @param showToSlides {number} количество слайдов для показа
+     * @param infinity {boolean} режим бесконечности
+     * @param responsive {array} массив с параметрами для адаптивности
+     */
     constructor({
                     main,
                     numberSlider = 0,
@@ -13,9 +23,20 @@ class SliderCarousel {
                     infinity = false,
                     responsive = []
                 }) {
+        /**
+         * Обработка отсутствия необходимых свойств
+         */
         if (!wrap || !main) {
             console.warn('slider-carousel: Необходимо 2 свойства, "main" и "wrap"')
         }
+        /**
+         *
+         * @type {Element}
+         * @this {SliderCarousel}
+         * @param widthOneSlide {string} вычисляем ширину одного слайда
+         * @param options {object} опции для слайдера
+         * @param slides {array} массив слайдов (классы)
+         */
         this.main = document.querySelector(main);
         this.wrap = document.querySelector(wrap);
         this.slides = document.querySelector(wrap).children;
@@ -24,8 +45,6 @@ class SliderCarousel {
         this.showToSlides = showToSlides;
         this.numberSlider = numberSlider;
         this.widthOneSlide = window.innerWidth * 0.9 / showToSlides;
-        this.onePersent = window.innerWidth * 0.9 / 100;
-        this.positionNow = this.wrap.style.transform;
         this.options = {
             position,
             widthSlides: 100 / this.showToSlides,
@@ -34,8 +53,11 @@ class SliderCarousel {
         this.responsive = responsive;
     }
 
+    /**
+     * инициализация слайдера
+     *  @this {SliderCarousel}
+     */
     init() {
-
         this.addGloClass();
         this.addStyle();
         if (this.prev && this.next) {
@@ -53,8 +75,13 @@ class SliderCarousel {
             this.responseInit();
         }
         this.swipe();
+        this.swipeMouse();
     }
 
+    /**
+     * добавление классов к wrap и main
+     *  @this {SliderCarousel}
+     */
     addGloClass() {
         this.main.classList.add(`glo-slider${this.numberSlider}`);
         this.wrap.classList.add(`glo-slider__wrap${this.numberSlider}`);
@@ -63,6 +90,11 @@ class SliderCarousel {
         }
     }
 
+    /**
+     * добавление css свойств к main и wrap
+     *  @this {SliderCarousel}
+     *  @param style {string} id тега <style/>
+     */
     addStyle() {
         let style = document.getElementById(`sliderCarousel-style${this.numberSlider}`);
         if (!style) {
@@ -91,11 +123,19 @@ class SliderCarousel {
         document.head.appendChild(style)
     }
 
+    /**
+     * вешаем события на кнопки prev и next
+     *  @this {SliderCarousel}
+     */
     controlSlider() {
         this.prev.addEventListener('click', this.prevSlider);
         this.next.addEventListener('click', this.nextSlider);
     }
 
+    /**
+     * @this {SliderCarousel}
+     * обработка события нажатия на кнопку prev
+     */
     prevSlider = () => {
         if (this.options.infinity || this.options.position > 0) {
             --this.options.position;
@@ -105,6 +145,10 @@ class SliderCarousel {
             this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlides}%)`;
         }
     }
+    /**
+     * @this {SliderCarousel}
+     * обработка события нажатия на кнопку next
+     */
     nextSlider = () => {
         if (this.options.infinity || this.options.position < this.slides.length - this.showToSlides) {
             ++this.options.position;
@@ -116,6 +160,10 @@ class SliderCarousel {
         }
     }
 
+    /**
+     * создание кнопок если пользователь не передал свои
+     * @this {SliderCarousel}
+     */
     addArrow() {
         this.prev = document.createElement('button');
         this.next = document.createElement('button');
@@ -161,6 +209,13 @@ class SliderCarousel {
         document.head.appendChild(style);
     }
 
+    /**
+     * @this {SliderCarousel}
+     * @param slidesToShowDefault {number} сохраняем showToSlides перед изменением
+     * @param allResponse {array} переносим responsive в allResponse
+     * @param maxResponse {string} находим максимальное значение брекпоинта
+     * @param widthWindow {string} узнаем разрешение экрана
+     */
     responseInit() {
         const slidesToShowDefault = this.showToSlides;
         const allResponse = this.responsive.map(item => item.breakPoint);
@@ -185,6 +240,13 @@ class SliderCarousel {
         window.addEventListener('resize', checkResponse);
     }
 
+    /**
+     * @this {SliderCarousel}
+     * реализация свайпов слайдера
+     * @param arrayClientX {array} создаем массив для сохранения положений касания
+     * @param a {string} конкретное значение положения касания
+     * @param swipeDistance {string} расстояние от начала касания до конца
+     */
     swipe() {
         let arrayClientX = [];
         document.querySelector(`.glo-slider${this.numberSlider}`).addEventListener('touchmove', (e) => {
